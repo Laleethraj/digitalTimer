@@ -2,7 +2,7 @@
 import {Component} from 'react'
 
 class DigitalTimer extends Component {
-  state = {isTimerOn: false, setTimer: 25, time: 0, incDec: true}
+  state = {isTimerOn: false, setTimer: 25, time: 0}
 
   updateTime = () => {
     this.setState(prev => ({time: prev.time - 1}))
@@ -10,7 +10,7 @@ class DigitalTimer extends Component {
 
   onStart = () => {
     this.timerId = setInterval(this.updateTime, 1000)
-    this.setState({isTimerOn: true, incDec: false})
+    this.setState({isTimerOn: true})
   }
 
   onStop = () => {
@@ -32,7 +32,6 @@ class DigitalTimer extends Component {
       isTimerOn: false,
       setTimer: 25,
       time: 0,
-      incDec: true,
     })
   }
 
@@ -58,7 +57,7 @@ class DigitalTimer extends Component {
   }
 
   render() {
-    const {isTimerOn, setTimer, incDec} = this.state
+    const {isTimerOn, setTimer} = this.state
 
     const timer = `${this.timerInMinutes()}:${this.timerInSeconds()}`
 
@@ -99,11 +98,19 @@ class DigitalTimer extends Component {
           </div>
           <p>Set Timer limit</p>
           <div>
-            <button type="button" onClick={incDec && this.onDecrement}>
+            <button
+              type="button"
+              onClick={this.onDecrement}
+              disabled={isTimerOn}
+            >
               -
             </button>
             <p>{setTimer}</p>
-            <button type="button" onClick={incDec && this.onIncrement}>
+            <button
+              type="button"
+              onClick={this.onIncrement}
+              disabled={isTimerOn}
+            >
               +
             </button>
           </div>
